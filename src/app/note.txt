@@ -1,0 +1,21 @@
+
+<div *ngIf="spettacolo">
+  <p>{{ conferma1 || nomeUtente + ', seleziona un posto' }}</p>
+  <app-sala-teatro
+    [rapido]="rapido"
+    [nomeUtente]="nomeUtente"
+    [(spettacolo)]="spettacolo"
+    (spettacoloChange)="spettacoloChange()"
+  ></app-sala-teatro>
+</div>
+<div *ngIf="admin && spettacoliIn$">
+  <app-gestione
+    [spettacoliIn$]="spettacoliIn$"
+    (spettacoliEmitter)="aggiornaSpettacoli($event)"
+  ></app-gestione>
+  <p>{{ conferma2 }}</p>
+</div>
+<button *ngIf="spettacoliIn$ && !spettacolo" (click)="inizio()">
+  indietro
+</button>
+<button *ngIf="spettacolo" (click)="indietro()">indietro</button>

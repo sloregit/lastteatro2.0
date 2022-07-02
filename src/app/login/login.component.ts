@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Spettacolo } from '../app.component';
+import { Teatro } from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -8,31 +8,16 @@ import { Spettacolo } from '../app.component';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  @Input() spettacoli: Observable<Array<Spettacolo>>;
-  @Input() spettacoloScelto: string;
+  @Input() spettacolo: Observable<Teatro>;
   @Input() nomeUtente: string;
-  @Output() spettacoloSceltoChange = new EventEmitter<string>();
   @Output() nomeUtenteChange = new EventEmitter<string>();
-  nomiSpettacoli: Array<string>;
   sub: Subscription;
   logged: boolean;
-  constructor() {
-    this.nomiSpettacoli = new Array();
-  }
-  seleziona($event: Event) {
-    this.spettacoloSceltoChange.emit((<HTMLSelectElement>$event.target).value);
-  }
+  constructor() {}
   inInput($event: KeyboardEvent) {
     this.nomeUtenteChange.emit((<HTMLInputElement>$event.target).value);
   }
-  ngOnInit() {
-    //filtra e inserisce nell'array solo i nomi degli spettacoli
-    this.sub = this.spettacoli.subscribe((spettacoli: Array<Spettacolo>) => {
-      spettacoli.map((spettacolo: Spettacolo) =>
-        this.nomiSpettacoli.push(spettacolo.nomeSpettacolo)
-      );
-    });
-  }
+  ngOnInit() {}
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

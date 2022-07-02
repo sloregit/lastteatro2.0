@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 import { TeatroDBService } from './teatro-db.service';
 import { Observable, of, map, Subscription } from 'rxjs';
 
-export class Spettacolo {
-  nomeSpettacolo: string;
-  teatro: Teatro;
-}
 export class Teatro {
   platea: Array<Array<string>>;
   palco: Array<Array<string>>;
@@ -17,25 +13,18 @@ export class Teatro {
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  spettacoliIn$: Observable<Array<Spettacolo>>;
+  datiIn$: Observable<Teatro>;
+  teatro: Teatro;
   admin: boolean;
   spettacoloScelto: string;
   nomeUtente: string;
-  spettacolo: Observable<Spettacolo>;
   rapido: boolean;
   conferma1: string;
   conferma2: string;
   sub: Subscription;
   constructor(private TeatroDBService: TeatroDBService) {}
 
-  foo2() {
-    this.spettacolo.subscribe((val) => console.log(val));
-  }
-  //conferma le prenotazioni
-  confermaPrenotazioni() {
-    this.spettacolo.subscribe((spettacolo) => console.log(spettacolo));
-  }
-  aggiornaSpettacoli(spettacoliAggiornati: Array<Spettacolo>) {
+  aggiornaSpettacoli(spettacoliAggiornati: Teatro) {
     this.TeatroDBService.SetPrenotazioni$(
       JSON.stringify(spettacoliAggiornati)
     ).subscribe((ok) => (this.conferma2 = ok + ': spettacoli aggiornati'));
@@ -43,39 +32,31 @@ export class AppComponent {
   //prenota al click
   spettacoloChange() {
     //OK
-    this.sub = this.spettacoliIn$.subscribe((spettacoli: Array<Spettacolo>) =>
+    this.sub = this.datiIn$.subscribe((spettacolo: Teatro) =>
       this.TeatroDBService.SetPrenotazioni$(
-        JSON.stringify(spettacoli)
+        JSON.stringify(spettacolo)
       ).subscribe(
         (val) => (this.conferma1 = val + ': ' + this.nomeUtente + ' aggiunto')
       )
     );
   }
   //recupera lo spettacolo dai dati in ingresso e lo trasforma in observable
-  getTeatro(rapido: boolean) {
+  /*getTeatro(rapido: boolean) {
     this.rapido = rapido;
-    let spettacoloObs$: Observable<Array<Spettacolo>> = this.spettacoliIn$.pipe(
-      map((spettacoli: Array<Spettacolo>) =>
-        spettacoli.filter(
-          (spettacolo: Spettacolo) =>
-            spettacolo.nomeSpettacolo === this.spettacoloScelto
-        )
-      )
-    );
-    this.sub = spettacoloObs$.subscribe({
-      next: (spettacolo: Spettacolo[]) =>
-        (this.spettacolo = new Observable((subscriber) =>
-          subscriber.next(spettacolo[0])
+    this.sub = this.datiIn$.subscribe({
+      next: (spettacolo: Teatro) =>
+        (this.teatro = new Observable((subscriber) =>
+          subscriber.next(spettacolo)
         )),
       error: (e) => console.error('' + JSON.stringify(e)),
     });
-  }
+  }*/
   //recupera i dati dal server
   getDati(admin: boolean) {
     this.admin = admin;
     this.sub = this.TeatroDBService.getPrenotazioni$().subscribe({
       next: (res: string) => {
-        this.spettacoliIn$ = of(JSON.parse(res));
+        this.datiIn$ = of(JSON.parse(res));
         console.log(JSON.parse(res));
       },
       error: (e) =>
@@ -84,14 +65,14 @@ export class AppComponent {
   }
   //torna da teatro --> all'inizio
   inizio() {
-    this.spettacoliIn$ = undefined;
+    this.datiIn$ = undefined;
     this.rapido = undefined;
     this.sub.unsubscribe();
   }
   //torna da teatro --> a login
   indietro() {
     this.spettacoloScelto = undefined;
-    this.spettacolo = undefined;
+    this.teatro = undefined;
     this.rapido = undefined;
     this.nomeUtente = undefined;
     this.conferma1 = undefined;
