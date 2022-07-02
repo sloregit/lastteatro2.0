@@ -1,0 +1,47 @@
+<div *ngIf="!spettacoliIn$">
+  <button (click)="getDati(false)">Accedi</button><br />
+  <button (click)="getDati(true)">Gestione spettacoli</button>
+</div>
+<div *ngIf="!admin && spettacoliIn$ && !spettacolo">
+  <app-login
+    [spettacoli]="spettacoliIn$"
+    [(spettacoloScelto)]="spettacoloScelto"
+    [(nomeUtente)]="nomeUtente"
+  ></app-login>
+  <br />
+  <br />
+  <div *ngIf="rapido === undefined">
+    <button
+      [disabled]="!nomeUtente || !spettacoloScelto"
+      (click)="getTeatro(false)"
+    >
+      Prenota
+    </button>
+    <button
+      [disabled]="!nomeUtente || !spettacoloScelto"
+      (click)="getTeatro(true)"
+    >
+      Veloce
+    </button>
+  </div>
+</div>
+<div *ngIf="spettacolo">
+  <p>{{ conferma1 || nomeUtente + ', seleziona un posto' }}</p>
+  <app-sala-teatro
+    [rapido]="rapido"
+    [nomeUtente]="nomeUtente"
+    [(spettacolo)]="spettacolo"
+    (spettacoloChange)="spettacoloChange()"
+  ></app-sala-teatro>
+</div>
+<div *ngIf="admin && spettacoliIn$">
+  <app-gestione
+    [spettacoliIn$]="spettacoliIn$"
+    (spettacoliEmitter)="aggiornaSpettacoli($event)"
+  ></app-gestione>
+  <p>{{ conferma2 }}</p>
+</div>
+<button *ngIf="spettacoliIn$ && !spettacolo" (click)="inizio()">
+  indietro
+</button>
+<button *ngIf="spettacolo" (click)="indietro()">indietro</button>

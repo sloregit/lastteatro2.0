@@ -1,0 +1,19 @@
+<div>
+  <form>
+    <select (change)="seleziona($event)">
+      <option selected="true" disabled="true" [value]="undefined">
+        Seleziona lo spettacolo
+      </option>
+      <option *ngFor="let nome of nomiSpettacoli">{{ nome }}</option>
+    </select>
+    <br />
+    <br />
+    <input
+      type="text"
+      name="nomeUtente"
+      (keyup)="inInput($event)"
+      [ngModel]="nomeUtente"
+      placeholder="inserisci il tuo nome"
+    />
+  </form>
+</div>

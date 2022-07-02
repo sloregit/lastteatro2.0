@@ -1,0 +1,37 @@
+<div>
+  <p *ngIf="nomePosto">{{ nomePosto }}</p>
+  <div *ngFor="let fila of platea; let i = index">
+    <span *ngFor="let posto of fila; let j = index">
+      <app-pulsante
+        [nomePosto]="posto"
+        [etichetta]="'P' + i + j"
+        [prenotato]="prenotato"
+        [rapido]="rapido"
+        (nomePostoEmitter)="mostraNome($event)"
+        (cliccato)="
+          rapido ? prenotaVeloce('platea', i, j) : seleziona('platea', i, j)
+        "
+        (selezionatoEmitter)="selezionato = $event"
+      >
+      </app-pulsante>
+    </span>
+  </div>
+  <br />
+  <div *ngFor="let fila of palco; let n = index">
+    <span *ngFor="let posto of fila; let m = index">
+      <app-pulsante
+        [nomePosto]="posto"
+        [etichetta]="'P' + n + m"
+        [prenotato]="prenotato"
+        [rapido]="rapido"
+        (nomePostoEmitter)="mostraNome($event)"
+        (cliccato)="
+          rapido ? prenotaVeloce('palco', n, m) : seleziona('palco', n, m)
+        "
+        (selezionatoEmitter)="selezionato = $event"
+      >
+      </app-pulsante>
+    </span>
+  </div>
+  <button *ngIf="!rapido" (click)="confermaPrenotazioni()">conferma</button>
+</div>

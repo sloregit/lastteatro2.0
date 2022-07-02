@@ -1,0 +1,67 @@
+<button *ngIf="!showNomi" (click)="vediSpettacoli()">Spettacoli</button>
+
+<div *ngIf="showNomi">
+  <button (click)="nascondi()">Nascondi</button>
+  <div *ngFor="let spettacolo of nomiSpettacoli">
+    <p>{{ spettacolo }}</p>
+  </div>
+</div>
+<form>
+  <br />
+  <input
+    type="text"
+    name="nomeSpettacolo"
+    [(ngModel)]="nomeSpettacolo"
+    placeholder="inserisci il nome dello spettacolo"
+  />
+</form>
+<div>
+  <form action="">
+    <p>configura la platea</p>
+    <select [(ngModel)]="filePlatea" name="filePlatea" id="">
+      <option selected="true" disabled="true" [value]="undefined">file</option>
+      <option
+        *ngFor="let file of filePlateaMax; let i = index"
+        [ngValue]="i + 1"
+      >
+        {{ i + 1 }}
+      </option>
+    </select>
+
+    <select [(ngModel)]="postiPlatea" name="postiPlatea" id="">
+      <option selected="true" disabled="true" [value]="undefined">posti</option>
+      <option
+        *ngFor="let file of postiPlateaMax; let i = index"
+        [ngValue]="i + 1"
+      >
+        {{ i + 1 }}
+      </option>
+    </select>
+  </form>
+  <form action="">
+    <p>configura il palco</p>
+    <select [(ngModel)]="filePalco" name="filePalco" id="">
+      <option selected="true" disabled="true" [value]="undefined">file</option>
+      <option
+        *ngFor="let file of filePalchiMax; let i = index"
+        [ngValue]="i + 1"
+      >
+        {{ i + 1 }}
+      </option>
+    </select>
+    <select [(ngModel)]="postiPalco" name="postiPalco" id="">
+      <option selected="true" disabled="true" [value]="undefined">posti</option>
+      <option
+        *ngFor="let file of postiPalchiMax; let i = index"
+        [ngValue]="i + 1"
+      >
+        {{ i + 1 }}
+      </option>
+    </select>
+  </form>
+</div>
+<br />
+<button (click)="conferma()">Conferma</button>
+<br />
+<br />
+<button>indietro</button>

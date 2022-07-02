@@ -1,0 +1,12 @@
+.selezionato {
+  background-color: green;
+}
+.nonSelezionato {
+  background-color: turquoise;
+}
+.prenotato {
+  background-color: red;
+}
+.libero {
+  background-color: turquoise;
+}
