@@ -45,7 +45,7 @@ export class nuovoSpettacolo extends Teatro {
 export class GestioneComponent implements OnInit {
   @Input() datiIn$$: Observable<Array<Teatro>>;
   @Output() spettacoliEmitter = new EventEmitter();
-  spettacoli: Teatro;
+  teatro: Teatro;
   newSpettacolo: nuovoSpettacolo;
   filePlateaMax;
   postiPlateaMax;
