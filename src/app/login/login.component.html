@@ -1,11 +1,12 @@
+<form>
+  <input
+    type="text"
+    name="chiaveUtente"
+    [(ngModel)]="chiaveUtente"
+    placeholder="inserisci una chiave"
+  />
+</form>
+<button [disabled]="!chiaveUtente" (click)="accedi()">accedi</button>
 <div>
-  <form>
-    <input
-      type="text"
-      name="nomeUtente"
-      (keyup)="inInput($event)"
-      [ngModel]="nomeUtente"
-      placeholder="inserisci il tuo nome"
-    />
-  </form>
+  <p></p>
 </div>

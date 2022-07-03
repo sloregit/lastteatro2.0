@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { Teatro } from '../app.component';
+import { TeatroDBService } from '../teatro-db.service';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +7,12 @@ import { Teatro } from '../app.component';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  @Input() spettacolo: Observable<Teatro>;
-  @Input() nomeUtente: string;
-  @Output() nomeUtenteChange = new EventEmitter<string>();
-  sub: Subscription;
-  logged: boolean;
+  Key: string = '0ef3f513';
+  chiaveUtente: string;
+  @Output() chiaveUtenteEmitter = new EventEmitter<string>();
   constructor() {}
-  inInput($event: KeyboardEvent) {
-    this.nomeUtenteChange.emit((<HTMLInputElement>$event.target).value);
+  accedi() {
+    this.chiaveUtenteEmitter.emit(this.chiaveUtente);
   }
   ngOnInit() {}
-  ngOnDestroy() {
-    this.sub.unsubscribe();
-  }
 }

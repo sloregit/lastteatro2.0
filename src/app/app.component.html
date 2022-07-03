@@ -2,12 +2,41 @@
   <button (click)="getDati(false)">Accedi</button><br />
   <button (click)="getDati(true)">Gestione spettacoli</button>
 </div>
-<div *ngIf="!admin && datiIn$">
-  <app-login [spettacolo]="datiIn$" [(nomeUtente)]="nomeUtente"></app-login>
+<div *ngIf="!admin && datiIn$ && !teatro">
+  <app-login [spettacoli]="datiIn$" chiaveUtenteEmitter="chiave"></app-login>
   <br />
   <br />
   <div *ngIf="rapido === undefined">
+    <div>
+      <form>
+        <input
+          type="text"
+          name="nomeUtente"
+          (keyup)="inInput($event)"
+          [ngModel]="nomeUtente"
+          placeholder="inserisci il tuo nome"
+        />
+      </form>
+    </div>
     <button [disabled]="!nomeUtente" (click)="getTeatro(false)">Prenota</button>
     <button [disabled]="!nomeUtente" (click)="getTeatro(true)">Veloce</button>
   </div>
 </div>
+<div *ngIf="teatro">
+  <p>{{ conferma1 || nomeUtente + ', seleziona un posto' }}</p>
+  <app-sala-teatro
+    [rapido]="rapido"
+    [nomeUtente]="nomeUtente"
+    [(teatro)]="teatro"
+    (spettacoloChange)="spettacoloChange()"
+  ></app-sala-teatro>
+</div>
+<div *ngIf="admin && datiIn$">
+  <app-gestione
+    [datiIn$]="datiIn$"
+    (spettacoliEmitter)="aggiornaSpettacoli($event)"
+  ></app-gestione>
+  <p>{{ conferma2 }}</p>
+</div>
+<button *ngIf="datiIn$ && !teatro" (click)="inizio()">indietro</button>
+<button *ngIf="teatro" (click)="indietro()">indietro</button>

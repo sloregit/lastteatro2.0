@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TeatroDBService } from './teatro-db.service';
 import { Observable, of, map, Subscription } from 'rxjs';
 
@@ -22,6 +22,7 @@ export class AppComponent {
   conferma1: string;
   conferma2: string;
   sub: Subscription;
+  @Input() chiaveUtente: string;
   constructor(private TeatroDBService: TeatroDBService) {}
 
   aggiornaSpettacoli(spettacoliAggiornati: Teatro) {
@@ -41,7 +42,7 @@ export class AppComponent {
     );
   }
   //recupera lo spettacolo dai dati in ingresso e lo trasforma in observable
-  getTeatro(rapido: boolean) {
+  /*getTeatro(rapido: boolean) {
     this.rapido = rapido;
     this.sub = this.datiIn$.subscribe({
       next: (spettacolo: Teatro) =>
@@ -50,7 +51,7 @@ export class AppComponent {
         )),
       error: (e) => console.error('' + JSON.stringify(e)),
     });
-  }
+  }*/
   //recupera i dati dal server
   getDati(admin: boolean) {
     this.admin = admin;
@@ -62,6 +63,9 @@ export class AppComponent {
       error: (e) =>
         console.error('Observer got an error: ' + JSON.stringify(e)),
     });
+  }
+  inInput(key: string) {
+    this.chiaveUtente = key;
   }
   //torna da teatro --> all'inizio
   inizio() {
