@@ -41,7 +41,7 @@ export class AppComponent {
     );
   }
   //recupera lo spettacolo dai dati in ingresso e lo trasforma in observable
-  /*getTeatro(rapido: boolean) {
+  getTeatro(rapido: boolean) {
     this.rapido = rapido;
     this.sub = this.datiIn$.subscribe({
       next: (spettacolo: Teatro) =>
@@ -50,7 +50,7 @@ export class AppComponent {
         )),
       error: (e) => console.error('' + JSON.stringify(e)),
     });
-  }*/
+  }
   //recupera i dati dal server
   getDati(admin: boolean) {
     this.admin = admin;

@@ -1,4 +1,4 @@
-<div *ngIf="!spettacoliIn$">
+<div *ngIf="!datiIn$">
   <button (click)="getDati(false)">Accedi</button><br />
   <button (click)="getDati(true)">Gestione spettacoli</button>
 </div>
@@ -7,17 +7,7 @@
   <br />
   <br />
   <div *ngIf="rapido === undefined">
-    <button
-      [disabled]="!nomeUtente || !spettacoloScelto"
-      (click)="getTeatro(false)"
-    >
-      Prenota
-    </button>
-    <button
-      [disabled]="!nomeUtente || !spettacoloScelto"
-      (click)="getTeatro(true)"
-    >
-      Veloce
-    </button>
+    <button [disabled]="!nomeUtente" (click)="getTeatro(false)">Prenota</button>
+    <button [disabled]="!nomeUtente" (click)="getTeatro(true)">Veloce</button>
   </div>
 </div>

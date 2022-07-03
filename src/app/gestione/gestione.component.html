@@ -1,20 +1,3 @@
-<button *ngIf="!showNomi" (click)="vediSpettacoli()">Spettacoli</button>
-
-<div *ngIf="showNomi">
-  <button (click)="nascondi()">Nascondi</button>
-  <div *ngFor="let spettacolo of nomiSpettacoli">
-    <p>{{ spettacolo }}</p>
-  </div>
-</div>
-<form>
-  <br />
-  <input
-    type="text"
-    name="nomeSpettacolo"
-    [(ngModel)]="nomeSpettacolo"
-    placeholder="inserisci il nome dello spettacolo"
-  />
-</form>
 <div>
   <form action="">
     <p>configura la platea</p>

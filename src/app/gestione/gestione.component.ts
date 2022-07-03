@@ -5,9 +5,8 @@ import { Teatro } from '../app.component';
 export class nuovoSpettacolo extends Teatro {
   nomeSpettacolo: string;
   teatro: Teatro;
-  constructor(nomeSpettacolo) {
+  constructor() {
     super();
-    this.nomeSpettacolo = nomeSpettacolo;
   }
   //genera un nuovo spettacolo vuoto con nome
   genera(
@@ -46,10 +45,8 @@ export class nuovoSpettacolo extends Teatro {
 export class GestioneComponent implements OnInit {
   @Input() spettacoliIn$: Observable<Array<Teatro>>;
   @Output() spettacoliEmitter = new EventEmitter();
-  spettacoli: Array<Spettacolo>;
+  spettacoli: Teatro;
   newSpettacolo: nuovoSpettacolo;
-  nomiSpettacoli: Array<string>;
-  nomeSpettacolo: string;
   filePlateaMax;
   postiPlateaMax;
   filePalchiMax;
@@ -63,22 +60,20 @@ export class GestioneComponent implements OnInit {
   showNomi: boolean;
   sub: Subscription;
   constructor() {
-    this.nomiSpettacoli = new Array();
     this.filePlateaMax = new Array(7);
     this.postiPlateaMax = new Array(10);
     this.filePalchiMax = new Array(6);
     this.postiPalchiMax = new Array(4);
   }
   conferma() {
-    this.newSpettacolo = new nuovoSpettacolo(this.nomeSpettacolo);
+    this.newSpettacolo = new nuovoSpettacolo();
     this.newSpettacolo.genera(
       this.filePlatea,
       this.postiPlatea,
       this.filePalco,
       this.postiPalco
     );
-    this.spettacoli.push(this.newSpettacolo);
-    this.spettacoliEmitter.emit(this.spettacoli);
+    this.spettacoliEmitter.emit();
   }
   vediSpettacoli() {
     this.showNomi = true;
@@ -86,14 +81,7 @@ export class GestioneComponent implements OnInit {
   nascondi() {
     this.showNomi = false;
   }
-  ngOnInit() {
-    this.sub = this.spettacoliIn$.subscribe((spettacoli: Array<Spettacolo>) => {
-      this.spettacoli = spettacoli;
-      spettacoli.map((spettacolo: Spettacolo) =>
-        this.nomiSpettacoli.push(spettacolo.nomeSpettacolo)
-      );
-    });
-  }
+  ngOnInit() {}
   ngOnDestroy() {
     this.sub.unsubscribe();
   }

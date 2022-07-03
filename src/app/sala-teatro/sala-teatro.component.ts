@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Spettacolo } from '../app.component';
+import { Teatro } from '../app.component';
 
 export class Prenotazione {
   zona: string;
@@ -39,10 +39,9 @@ export class Selezione {
 })
 export class SalaTeatroComponent implements OnInit {
   @Input() rapido: boolean;
-  @Input() spettacolo: Observable<Spettacolo>;
-  @Output() spettacoloChange = new EventEmitter<Observable<Spettacolo>>();
+  @Input() teatro: Observable<Teatro>;
+  @Output() spettacoloChange = new EventEmitter<Observable<Teatro>>();
   @Input() nomeUtente: string;
-  nomeSpettacolo: string;
   nomePosto: string;
   platea: Array<Array<string>>;
   palco: Array<Array<string>>;
@@ -59,16 +58,15 @@ export class SalaTeatroComponent implements OnInit {
 
   //mappa i selezionati e aggiorna lo spettacolo
   confermaPrenotazioni() {
-    this.sub = this.spettacolo.subscribe((spettacolo: Spettacolo) => {
+    this.sub = this.teatro.subscribe((teatro: Teatro) => {
       this.prenotaGruppo.selezionati.map(
         (prenotazione: Prenotazione) =>
-          (spettacolo.teatro[prenotazione.zona][prenotazione.fila][
-            prenotazione.posto
-          ] = prenotazione.nome)
+          (teatro[prenotazione.zona][prenotazione.fila][prenotazione.posto] =
+            prenotazione.nome)
       );
     });
     this.prenotato = true;
-    this.spettacoloChange.emit(this.spettacolo);
+    this.spettacoloChange.emit(this.teatro);
   }
   //crea il gruppo di prenotazioni
   seleziona(zona: string, fila: number, posto: number) {
@@ -81,12 +79,11 @@ export class SalaTeatroComponent implements OnInit {
   }
   //prenotazione Veloce
   prenotaVeloce(zona: string, fila: number, posto: number) {
-    this.sub = this.spettacolo.subscribe(
-      (spettacolo: Spettacolo) =>
-        (spettacolo.teatro[zona][fila][posto] = this.nomeUtente)
+    this.sub = this.teatro.subscribe(
+      (teatro: Teatro) => (teatro[zona][fila][posto] = this.nomeUtente)
     );
     this.prenotato = true;
-    this.spettacoloChange.emit(this.spettacolo);
+    this.spettacoloChange.emit(this.teatro);
   }
   //mostra il nome del posto prenotato
   mostraNome($event: string) {
@@ -94,9 +91,9 @@ export class SalaTeatroComponent implements OnInit {
   }
   //invocata subito dopo il caricamento del component
   ngOnInit() {
-    this.sub = this.spettacolo.subscribe((spettacolo: Spettacolo) => {
-      this.platea = spettacolo.teatro.platea;
-      this.palco = spettacolo.teatro.palco;
+    this.sub = this.teatro.subscribe((teatro: Teatro) => {
+      this.platea = teatro.platea;
+      this.palco = teatro.palco;
     });
   }
   ngOnDestroy() {
