@@ -43,7 +43,7 @@ export class nuovoSpettacolo extends Teatro {
   styleUrls: ['./gestione.component.css'],
 })
 export class GestioneComponent implements OnInit {
-  @Input() datiIn$$: Observable<Array<Teatro>>;
+  @Input() datiIn$: Observable<Teatro>;
   @Output() spettacoliEmitter = new EventEmitter();
   teatro: Teatro;
   newSpettacolo: nuovoSpettacolo;
