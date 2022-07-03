@@ -68,6 +68,9 @@ export class AppComponent {
     //manca il tipo
     this.chiaveUtente = key;
   }
+  inInput($event) {
+    this.nomeUtente = $event;
+  }
   //torna da teatro --> all'inizio
   inizio() {
     this.datiIn$ = undefined;

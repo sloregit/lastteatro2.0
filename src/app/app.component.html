@@ -1,9 +1,6 @@
-<app-login
-  [spettacoli]="datiIn$"
-  (chiaveUtenteEmitter)="getChiave($event)"
-></app-login>
+<app-login (chiaveUtenteEmitter)="getChiave($event)"></app-login>
 
-<div *ngIf="!admin && datiIn$ && !teatro">
+<div *ngIf="chiaveUtente && !teatro">
   <br />
   <br />
   <div *ngIf="rapido === undefined">
@@ -18,8 +15,8 @@
         />
       </form>
     </div>
-    <button [disabled]="!nomeUtente" (click)="getTeatro(false)">Prenota</button>
-    <button [disabled]="!nomeUtente" (click)="getTeatro(true)">Veloce</button>
+    <button [disabled]="!nomeUtente" (click)="getDati(false)">Prenota</button>
+    <button [disabled]="!nomeUtente" (click)="getDati(true)">Veloce</button>
   </div>
 </div>
 <div *ngIf="teatro">
@@ -27,8 +24,6 @@
   <app-sala-teatro
     [rapido]="rapido"
     [nomeUtente]="nomeUtente"
-    [(teatro)]="teatro"
-    (spettacoloChange)="spettacoloChange()"
   ></app-sala-teatro>
 </div>
 <div *ngIf="admin && datiIn$">
