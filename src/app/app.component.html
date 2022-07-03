@@ -1,9 +1,9 @@
-<div *ngIf="!datiIn$">
-  <button (click)="getDati(false)">Accedi</button><br />
-  <button (click)="getDati(true)">Gestione spettacoli</button>
-</div>
+<app-login
+  [spettacoli]="datiIn$"
+  (chiaveUtenteEmitter)="getChiave($event)"
+></app-login>
+
 <div *ngIf="!admin && datiIn$ && !teatro">
-  <app-login [spettacoli]="datiIn$" chiaveUtenteEmitter="chiave"></app-login>
   <br />
   <br />
   <div *ngIf="rapido === undefined">

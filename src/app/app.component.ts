@@ -64,7 +64,8 @@ export class AppComponent {
         console.error('Observer got an error: ' + JSON.stringify(e)),
     });
   }
-  inInput(key: string) {
+  getChiave(key) {
+    //manca il tipo
     this.chiaveUtente = key;
   }
   //torna da teatro --> all'inizio
