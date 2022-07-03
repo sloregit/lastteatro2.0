@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { Spettacolo, Teatro } from '../app.component';
+import { Teatro } from '../app.component';
 
-export class nuovoSpettacolo extends Spettacolo {
+export class nuovoSpettacolo extends Teatro {
   nomeSpettacolo: string;
   teatro: Teatro;
   constructor(nomeSpettacolo) {
@@ -44,7 +44,7 @@ export class nuovoSpettacolo extends Spettacolo {
   styleUrls: ['./gestione.component.css'],
 })
 export class GestioneComponent implements OnInit {
-  @Input() spettacoliIn$: Observable<Array<Spettacolo>>;
+  @Input() spettacoliIn$: Observable<Array<Teatro>>;
   @Output() spettacoliEmitter = new EventEmitter();
   spettacoli: Array<Spettacolo>;
   newSpettacolo: nuovoSpettacolo;
